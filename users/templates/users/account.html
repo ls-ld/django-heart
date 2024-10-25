@@ -1,0 +1,284 @@
+{% extends 'main.html' %} {% block content %}
+
+<style>
+    table {
+        border: 1px solid #ccc;
+        border-collapse: collapse;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        table-layout: fixed;
+    }
+
+    table caption {
+        font-size: 1.5em;
+        margin: 0.5em 0 0.75em;
+    }
+
+    table tr {
+        
+        border: 1px solid #ddd;
+        padding: 0.35em;
+    }
+
+    table th,
+    table td {
+        padding: 0.725em;
+        text-align: left;
+    }
+
+    table th {
+        background-color: #f8f8f8;
+        font-size: 0.85em;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+    }
+
+    @media screen and (max-width: 600px) {
+        table {
+            border: 0;
+        }
+
+        table caption {
+            font-size: 1.3em;
+        }
+
+        table thead {
+            border: none;
+            clip: rect(0 0 0 0);
+            height: 1px;
+            margin: -1px;
+            overflow: hidden;
+            padding: 0;
+            position: absolute;
+            width: 1px;
+        }
+
+        table tr {
+            border-bottom: 3px solid #ddd;
+            display: block;
+            margin-bottom: 0.625em;
+        }
+
+        table td {
+            border-bottom: 1px solid #ddd;
+            display: block;
+            font-size: 0.8em;
+            text-align: right;
+        }
+
+        table td::before {
+            /*
+          * aria-label has no advantage, it won't be read inside a table
+          content: attr(aria-label);
+          */
+            content: attr(data-label);
+            float: left;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        table td:last-child {
+            border-bottom: 0;
+        }
+       .center {
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          
+        }
+    }
+</style>
+<!-- Main Section -->
+<main class="settingsPage profile my-md">
+    <div class="container">
+        <div>
+
+        <div class="layout">
+            <div class="column column--1of3">
+                <div class="card text-center">
+                    <div class="card__body dev">
+                        <a
+                            class="tag tag--pill tag--main settings__btn"
+                            href="{% url 'edit-account' %}"
+                            ><i class="im im-edit"></i> Edit</a
+                        >
+                        <img
+                            class="avatar avatar--xl dev__avatar"
+                            src="{{profile.imageURL}}"
+                        />
+                        <h2 class="dev__name">{{profile.name}}</h2>
+                        <p class="dev__title">{{profile.short_into}}</p>
+                        <p class="dev__location">From {{profile.location}}</p>
+
+                        <ul class="dev__social">
+                            {% if profile.social_twitter %}
+                            <li>
+                                <a
+                                    title="Twitter"
+                                    href="{{profile.social_twitter}}"
+                                    target="_blank"
+                                    ><i class="im im-twitter"></i
+                                ></a>
+                            </li>
+                            {% endif %} {% if profile.social_linkedin %}
+                            <li>
+                                <a
+                                    title="LinkedIn"
+                                    href="{{profile.social_linkedin}}"
+                                    target="_blank"
+                                    ><i class="im im-linkedin"></i
+                                ></a>
+                            </li>
+                            {% endif %} {% if profile.social_website %}
+                            <li>
+                                <a
+                                    title="Personal Website"
+                                    href="{{profile.social_website}}"
+                                    target="_blank"
+                                    ><i class="im im-globe"></i
+                                ></a>
+                            </li>
+                            {% endif %}
+                        </ul>
+
+                    </div>
+
+                </div>
+                <div class="text-center">
+                    <a
+                        class="btn btn--main--outline btn--md my-md"
+                        name="genpdf"
+                        href="{% url 'report' %}"
+                    >Generate Report
+                    </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a class="btn btn--main--outline btn--md my-md" href="{% url 'edit-details' %}">Edit Details</a>
+                </div>
+                
+            </div>
+            <div class="column column--2of3">
+                <!--  -->
+                {% if heart %}
+                <!--  -->
+                <table>
+                    <thead>
+                        <th>Features</th>
+                        <th>Values</th>
+                    </thead>
+                    <tbody style=>
+                        <tr>
+                            <td scope="col">Age</td>
+                            <td data-label="Period">{{heart.age}}</td>
+                        </tr>
+                        <tr>
+                            <td scope="col">sex</td>
+                            <td data-label="Period">
+                                {{heart.get_sex_display}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="col">cp:</td>
+                            <td data-label="Period">
+                                {{heart.get_cp_display}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="col">trestbps</td>
+                            <td data-label="Period">{{heart.trestbps}}</td>
+                        </tr>
+                        <tr>
+                            <td scope="col">chol</td>
+                            <td data-label="Period">{{heart.chol}}</td>
+                        </tr>
+                        <tr>
+                            <td scope="col">fbs</td>
+                            <td data-label="Period">
+                                {{heart.get_fbs_display}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="col">restecg</td>
+                            <td data-label="Period">
+                                {{heart.get_restecg_display}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="col">thalach</td>
+                            <td data-label="Period">{{heart.thalach}}</td>
+                        </tr>
+                        <tr>
+                            <td scope="col">exang</td>
+                            <td data-label="Period">
+                                {{heart.get_exang_display}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="col">oldpeak</td>
+                            <td data-label="Period">{{heart.oldpeak}}</td>
+                        </tr>
+                        <tr>
+                            <td scope="col">slope</td>
+                            <td data-label="Period">
+                                {{heart.get_slope_display}}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td scope="col">ca</td>
+                            <td data-label="Period">{{heart.ca}}</td>
+                        </tr>
+                        <tr>
+                            <td scope="col">thal</td>
+                            <td data-label="Period">
+                                {{heart.get_thal_display}}
+                            </td>
+                        </tr>
+
+
+                        <tr>
+                            <th scope="col">Prediction Using KNN</th>
+                            <th scope="col">
+                                {% if heart.result1 == 0 %}
+                                <!--  -->
+                                <span>Healthy</span>
+                                {% elif heart.result1 == 1 %}
+                                <span>You Have a chance of Heart Disease</span>
+
+                                {% endif %}
+                            </th>
+                        </tr>
+                        <tr>
+                            <th scope="col">Prediction Using SVM Regr</th>
+                            <th scope="col">
+                                {% if heart.result2 == 0 %}
+                                <!--  -->
+                                <span>Healthy</span>
+                                {% elif heart.result2 == 1 %}
+                                <span>You Have a chance of Heart Disease</span>
+
+                                {% endif %}
+                            </th>
+                        </tr>
+                        <tr>
+                            <th scope="col">Prediction Using Random Forest</th>
+                            <th scope="col">
+                                {% if heart.result3 == 0 %}
+                                <!--  -->
+                                <span>Healthy</span>
+                                {% elif heart.result3 == 1 %}
+                                <span>You Have a chance of Heart Disease</span>
+
+                                {% endif %}
+                            </th>
+                        </tr>
+                    </tbody>
+                </table>
+                {% endif %}
+
+                <!--  -->
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock %}
